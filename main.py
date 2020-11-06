@@ -12,6 +12,6 @@ while cpu.interrupcao() == 'normal':
     cpu.executa()
 
 
-resposta = 2
+resposta = 0
 print(f'CPU parou na instrucao {cpu.instrucao()}')
 print(f'O valor de m[{resposta}] eh {cpu.get_mem_dados_indice(resposta)}')
