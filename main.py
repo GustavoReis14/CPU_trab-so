@@ -2,11 +2,10 @@ from cpu import Cpu
 
 cpu = Cpu()
 
-while True:
-    
-    comando = input().upper()
-    if len(comando.split()) > 1:
-        comando, valor = comando.split()
-    else:
-        valor = False
-    cpu.executa(comando, int(valor))
+file = open('inst.txt', 'r')
+
+cpu.executa(file)
+
+cpu.altera_dados()
+cpu.altera_programa()
+cpu.interru__pcao()
