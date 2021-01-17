@@ -1,3 +1,4 @@
 from sistemaOperacional import SistemaOperacional
 
-SistemaOperacional()
+sisteamOperacional = SistemaOperacional()
+

@@ -26,13 +26,13 @@ class SistemaOperacional:
 
   def __le(self):
     with open('0.txt', 'r') as conteudo:
-      self._cpu.set_ax(conteudo.readline())
+      self._cpu.set_ax(int(conteudo.readline()))
     self._cpu.incrementa_pc()
     return True
 
   def __grava(self):
     with open('1.txt', 'w') as conteudo:
-      conteudo.write(self._cpu.get_ax())
+      conteudo.write(str(self._cpu.get_ax()))
     self._cpu.incrementa_pc()
     return True
 
