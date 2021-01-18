@@ -23,6 +23,10 @@ class ControladorInterrupcoes:
             cpu.altera_estado()
           elif so._checkar_pendencia():
             so._carregar_programa()
+          elif not so._checkar_pendencia():
+            break
+
+
 
 
     
