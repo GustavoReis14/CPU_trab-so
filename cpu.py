@@ -15,6 +15,9 @@ class Cpu:
     def get_ax(self):
       return self.__ax
 
+    def set_pc(self, v):
+      self.__pc = v
+
     def set_ax(self, n):
       self.__ax = n
 

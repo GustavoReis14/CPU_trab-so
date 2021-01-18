@@ -21,8 +21,8 @@ class ControladorInterrupcoes:
           revolvido = so.resolve_instrucao(cpu.instrucao())
           if revolvido:
             cpu.altera_estado()
-
-
+          elif so._checkar_pendencia():
+            so._carregar_programa()
 
 
     
