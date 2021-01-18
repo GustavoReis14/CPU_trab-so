@@ -1,6 +1,0 @@
-cargi 10
-armm 2
-cargi 32
-soma 2
-armm 0
-para
