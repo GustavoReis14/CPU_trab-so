@@ -110,6 +110,15 @@ class Cpu:
 
     def estado_dormencia(self):
       self.__estado = 'dormindo'
+
+    def getMem_dados(self):
+      return self.__mem_dado
+    
+    def getAcumulador(self):
+      return self.__ax
+
+    def getPc(self):
+      return self.__pc
             
 
     def executa(self):
