@@ -107,6 +107,9 @@ class Cpu:
     
     def get_mem_dados_indice(self, indice):
       return self.__mem_dado[indice]
+
+    def estado_dormencia(self):
+      self.__estado = 'dormindo'
             
 
     def executa(self):
