@@ -1,0 +1,5 @@
+
+    resposta = 0
+
+    print(f'CPU parou na instrucao {self._instrucao}')
+    print(f'O valor de m[{resposta}] eh {self._cpu.get_mem_dados_indice(resposta)}')
