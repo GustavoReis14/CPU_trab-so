@@ -9,7 +9,7 @@ class Timer:
   def tempo_atual(self):
     return self._contador
 
-  def pendente(self):
+  def pendencia(self):
   if self._contador == self._lista_interrupcoes[0]['TEMPO']:
     if self._lista_interrupcoes[0]['TIPO'] == 'periodica':
       self._lista_interrupcoes[0]['TEMPO'] = self._lista_interrupcoes[0]['TEMPO'] + self._lista_interrupcoes[0]['PERIODO']
