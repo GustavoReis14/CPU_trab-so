@@ -2,12 +2,15 @@ class Job:
   def __init__(self, programa, entrada_saida):
     self.__pc = 0
     self.__ax = 0
-    self._programa = programa
-    self._mem_dados = []
+    self._mem_prog = [line.replace('\n','').upper() for line in programa]
+    self._mem_dados = [0 for _ in range(20)]
     self._status = 'pendente'
 
   def getPrograma(self):
     return self._programa
+
+  def getMem_prog(self):
+    return self._mem_prog
 
   def getMem_dados(self):
     return self._mem_dados
@@ -23,9 +26,15 @@ class Job:
     
   def setPc(self, pc):
     self.__pc = pc
-  
+
+  def setPendente(self):
+    self._status = 'pendente'
+
   def setAcumulador(self, ax):
     self.__ax = ax
+
+  def setDomir(self):
+    self._status = 'dormindo'
   
   def setMem_dados(self, mem):
     self._mem_dados = mem

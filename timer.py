@@ -10,18 +10,21 @@ class Timer:
     return self._contador
 
   def pendencia(self):
-    if self._contador == self._lista_interrupcoes[0]['TEMPO']:
-      if self._lista_interrupcoes[0]['TIPO'] == 'periodica':
-        self._lista_interrupcoes[0]['TEMPO'] = self._lista_interrupcoes[0]['TEMPO'] + self._lista_interrupcoes[0]['PERIODO']
-        self._lista_interrupcoes = sorted(self._lista_interrupcoes, key= lambda x : x['TEMPO'])
-        return self._lista_interrupcoes[0]['CODIGO']
+    if len(self._lista_interrupcoes) > 0:
+      if self._contador == self._lista_interrupcoes[0]['TEMPO']:
+        if self._lista_interrupcoes[0]['TIPO'] == 'periodica':
+          self._lista_interrupcoes[0]['TEMPO'] = self._lista_interrupcoes[0]['TEMPO'] + self._lista_interrupcoes[0]['PERIODO']
+          self._lista_interrupcoes = sorted(self._lista_interrupcoes, key= lambda x : x['TEMPO'])
+          return self._lista_interrupcoes[0]['CODIGO']
+        else:
+          interrupcao = self._lista_interrupcoes[0]
+          self._lista_interrupcoes = self._lista_interrupcoes[1:]
+          print(f'removido interrupcao {interrupcao}')
+          return interrupcao['CODIGO']
       else:
-        interrupcao = self._lista_interrupcoes[0]
-        self._lista_interrupcoes = self._lista_interrupcoes[1:]
-        return interrupcao['CODIGO']
+        return False
     else:
-      return -1
-
+      return False
 
   def interrupcao(self, tipo, periodo, tempo, codigo):
     interrupcao = {'CODIGO': codigo,

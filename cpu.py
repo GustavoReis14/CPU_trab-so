@@ -92,11 +92,14 @@ class Cpu:
     def altera_estado(self):
       self.__estado = 'normal'
 
-    def altera_programa(self, file):
-      self.__mem_prog = [line.replace('\n','').upper() for line in file]
+    def altera_programa(self, prog):
+      self.__mem_prog = prog
 
-    def altera_dados(self):
-      self.__mem_dado = [0 for _ in range(20)]
+    def setMem_dados(self, v):
+      self.__mem_dado = v
+    
+    def getMem_dados(self):
+      return self.__mem_dado
     
     def interrupcao(self):    
       return self.__estado
@@ -113,10 +116,10 @@ class Cpu:
 
     def estado_dormencia(self):
       self.__estado = 'dormindo'
-
-    def getMem_dados(self):
-      return self.__mem_dado
     
+    def getMem_prog(self):
+      return self.__mem_prog
+
     def getAcumulador(self):
       return self.__ax
 
