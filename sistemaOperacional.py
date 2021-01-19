@@ -82,7 +82,7 @@ class SistemaOperacional:
     for i, job in enumerate(self._lista_jobs, start=0):
       if job.getStatus() == 'dormindo': 
         return i
-    return -1
+    return False
 
   def _carregar_programa(self):
     self._job_atual = self._checkar_pendencia()

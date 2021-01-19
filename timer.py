@@ -37,5 +37,3 @@ class Timer:
     self._lista_interrupcoes = sorted(self._lista_interrupcoes, key= lambda x : x['TEMPO'])
     
 
-    def getTempo_da_prox_interrupcao(def):
-      return self._lista_interrupcoes[0]['TEMPO']
