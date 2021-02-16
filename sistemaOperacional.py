@@ -17,9 +17,9 @@ class SistemaOperacional:
     self._job1 = Job(open('./programas/prog1.txt', 'r'), self._timer.tempo_atual())
     self._job2 = Job(open('./programas/prog2.txt', 'r'), self._timer.tempo_atual())
     self._job3 = Job(open('./programas/prog3.txt', 'r'), self._timer.tempo_atual())
-    #self._job4 = Job(open('./programas/prog2.txt', 'r'), self._timer.tempo_atual())
+    self._job4 = Job(open('./programas/prog2.txt', 'r'), self._timer.tempo_atual())
 
-    self._lista_jobs.extend([self._job1, self._job2, self._job3])#,self._job3, self._job4])
+    self._lista_jobs.extend([self._job1, self._job2, self._job3, self._job4])#,self._job3, self._job4])
 
     self.escalonador = Escalonador(self._lista_jobs)
     
@@ -36,6 +36,7 @@ class SistemaOperacional:
     print(f'JOB STATUS : {self.escalonador.get_lista_jobs()[0].getStatus()}')
     print(f'JOB STATUS : {self.escalonador.get_lista_jobs()[1].getStatus()}')
     print(f'JOB STATUS : {self.escalonador.get_lista_jobs()[2].getStatus()}')
+    print(f'JOB STATUS : {self.escalonador.get_lista_jobs()[3].getStatus()}')
 
   def __para(self, codigo):
     self.escalonador.get_lista_jobs()[codigo].setFinalizado()
@@ -92,7 +93,9 @@ class SistemaOperacional:
   def resolve_interrupcao(self, codigo):
     job = self.escalonador.get_lista_jobs()[codigo]
     mem_prog = job.getMem_prog()
+    
     self._instrucoes_dic[mem_prog[job.getPc()]](codigo)
+    
     if job.getStatus() != 'finalizado':
       job.setPendente()
     self._cpu.altera_estado()
