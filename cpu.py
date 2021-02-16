@@ -9,6 +9,7 @@ class Cpu:
       'CARGX': self.__cargx, 'ARMM': self.__armm, 'ARMX': self.__armx,
       'SOMA': self.__soma, 'NEG': self.__neg, 'DESVZ': self.__desvz}
       self.__mem_dado = []
+      self.comando_atual = ''
 
 
 
@@ -130,7 +131,7 @@ class Cpu:
     def executa(self):
       comando = self.__mem_prog[self.__pc]
       if (len((self.__mem_prog[self.__pc]).split()) > 1): comando, valor = (self.__mem_prog[self.__pc]).split()
-        
+      self.comando_atual = comando
 
       if (comando == 'NEG'):
           self.__mem_prog_dic[comando]()

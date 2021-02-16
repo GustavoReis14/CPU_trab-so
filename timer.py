@@ -18,13 +18,14 @@ class Timer:
           return self._lista_interrupcoes[0]['CODIGO']
         else:
           interrupcao = self._lista_interrupcoes[0]
+          print(f'LISTA INTERRUP : {self._lista_interrupcoes}')
           self._lista_interrupcoes = self._lista_interrupcoes[1:]
           print(f'removido interrupcao {interrupcao}')
           return interrupcao['CODIGO']
       else:
-        return False
+        return -1
     else:
-      return False
+      return -1
 
   def interrupcao(self, tipo, periodo, tempo, codigo):
     interrupcao = {'CODIGO': codigo,

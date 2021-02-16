@@ -44,3 +44,6 @@ class Job:
 
   def setFinalizado(self):
     self._status = 'finalizado'
+
+  def incrementa_pc(self):
+    self.__pc += 1
