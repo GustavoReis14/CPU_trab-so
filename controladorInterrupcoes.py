@@ -3,7 +3,7 @@ from cpu import Cpu
 class ControladorInterrupcoes:
   
 
-  def execucao_cpu(self, cpu, so, timer):
+  def execucao_cpu(self, cpu, so, timer, escalonador):
     comando = ''
     while cpu.interrupcao() == 'normal' or cpu.interrupcao() == 'dormindo' :
 
@@ -11,9 +11,7 @@ class ControladorInterrupcoes:
       timer.incrementa()
 
       print(f'TIMER : {timer.tempo_atual()}')
-      print(f'JOB STATUS : {so._lista_jobs[0].getStatus()}')
-      print(f'JOB STATUS : {so._lista_jobs[1].getStatus()}')
-      print(f'JOB STATUS : {so._lista_jobs[2].getStatus()}')
+      
 
 
       while True:
@@ -27,9 +25,9 @@ class ControladorInterrupcoes:
         cpu.executa()
         if cpu.interrupcao() != 'normal':
           revolvido = so.resolve_instrucao(cpu.instrucao())
-          if so._lista_jobs[so._job_atual].getStatus() == 'finalizado' or so._lista_jobs[so._job_atual].getStatus() == 'dormindo':
+          if escalonador.get_lista_jobs()[escalonador.get_job_atual()].getStatus() == 'finalizado' or escalonador.get_lista_jobs()[escalonador.get_job_atual()].getStatus() == 'dormindo':
             so._carregar_programa()
-          if so._checkar_pendencia() == -1 and so._checkar_dormindo() == -1:
+          if escalonador.checka_pendencia() == -1 and escalonador.checka_dormindo() == -1:
             break
 
         
