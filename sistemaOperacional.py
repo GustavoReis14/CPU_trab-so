@@ -19,7 +19,7 @@ class SistemaOperacional:
     self._job3 = Job(open('./programas/prog3.txt', 'r'), self._timer.tempo_atual())
     #self._job4 = Job(open('./programas/prog2.txt', 'r'), self._timer.tempo_atual())
 
-    self._lista_jobs.extend([self._job1, self._job2])#,self._job3, self._job4])
+    self._lista_jobs.extend([self._job1, self._job2, self._job3])#,self._job3, self._job4])
 
     self._job_atual = 0
 
@@ -30,6 +30,10 @@ class SistemaOperacional:
     #inicia e roda o controlador
     self._controlador = ControladorInterrupcoes()
     self._controlador.execucao_cpu(self._cpu, self, self._timer)
+
+    print(f'JOB STATUS : {self._lista_jobs[0].getStatus()}')
+    print(f'JOB STATUS : {self._lista_jobs[1].getStatus()}')
+    print(f'JOB STATUS : {self._lista_jobs[2].getStatus()}')
   
   
 
