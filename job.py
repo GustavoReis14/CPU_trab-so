@@ -1,5 +1,5 @@
 class Job:
-  def __init__(self, programa, entrada_saida):
+  def __init__(self, programa, timer):
     self.__pc = 0
     self.__ax = 0
     self._mem_prog = [line.replace('\n','').upper() for line in programa]

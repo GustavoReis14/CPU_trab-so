@@ -2,7 +2,7 @@ class Cpu:
     def __init__(self):
       self.__pc = 0
       self.__ax = 0
-      self.__estado = ''
+      self.__estado = 'normal'
       self.__motivo = ''
       self.__mem_prog = []
       self.__mem_prog_dic = {'CARGI': self.__cargi, 'CARGM': self.__cargm,
