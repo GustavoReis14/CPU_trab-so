@@ -122,3 +122,6 @@ class SistemaOperacional:
       self._cpu.altera_programa(self.escalonador.get_lista_jobs()[self.escalonador.get_job_atual()].getMem_prog())
       self._cpu.setMem_dados(self.escalonador.get_lista_jobs()[self.escalonador.get_job_atual()].getMem_dados())
       self._cpu.set_pc(self.escalonador.get_lista_jobs()[self.escalonador.get_job_atual()].getPc())
+
+if __name__ == '__main__':
+  SistemaOperacional()
