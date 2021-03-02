@@ -1,5 +1,5 @@
 SOMA  0
-le
+le 1
 neg
-grava
+grava 1
 para
