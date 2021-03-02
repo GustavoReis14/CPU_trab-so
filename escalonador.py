@@ -16,8 +16,14 @@ class Escalonador:
         return i
     return -1
 
-  def set_job_atual(self, job):
+  def set_job_atual(self, job, timer):
     self.job_atual = job
+    #Só altera o timer na primeira chamada do JOB
+    if self.lista_jobs[self.job_atual].getTimer() == 0:
+      self.lista_jobs[self.job_atual].setTimer(timer)
+      print("TEMPO ATUAL",self.lista_jobs[self.job_atual].getTimer())
+    else:
+      print("JA INICIOU NO TEMPO", self.lista_jobs[self.job_atual].getTimer())
 
   def get_job_atual(self):
     return self.job_atual
