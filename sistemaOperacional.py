@@ -11,7 +11,8 @@ class SistemaOperacional:
 
     #timer
     self._timer = Timer()
-    self._timer.interrupcao('aperiodica', 0, 10, 1000)
+    #aperiodica por enquanto
+    self._timer.interrupcao('aperiodica',0, 10, 1000)
 
     #jobs / Escalonador
     self.carregaJobs()
@@ -42,7 +43,7 @@ class SistemaOperacional:
 
   def __para(self, codigo):
     self.escalonador.get_lista_jobs()[codigo].setFinalizado()
-    print("Exit")
+    print("Exit - Programa Finalizado\n")
     return False
   
   def __le(self, codigo):
@@ -78,7 +79,6 @@ class SistemaOperacional:
 
     return True
 
-
   def resolve_instrucao(self, instrucao):
     print(f'INSTRUCAO ILEGAL! = {instrucao}')
     if instrucao in self._instrucoes_dic:
@@ -91,33 +91,37 @@ class SistemaOperacional:
       else:
         self._cpu.estado_dormencia()
         return self._instrucoes_dic["PARA"](self.escalonador.get_job_atual())
+    else:
+      self.escalonador.lista_jobs[self.escalonador.job_atual].setFinalizado()
+      print("Instrução Ilegal\nExit - Programa Finalizado\n")
 
   def resolve_interrupcao(self, codigo):
     if codigo == 1000:
       print("inicializou o programa!!!!!!!!!!!")
+      #implementar leitura/gravacao de arquivo nos arquivos designados pelo parametro  
       self.escalonador.change_status()
       self.carregar_programa()
     else:
       job = self.escalonador.get_lista_jobs()[codigo]
       mem_prog = job.getMem_prog()
+      instrucao = mem_prog[job.getPc()]
+      comando, valor = instrucao.split()
       
-      self._instrucoes_dic[mem_prog[job.getPc()]](codigo)
+      self._instrucoes_dic[comando](codigo)
       
       if job.getStatus() != 'finalizado':
         job.setPendente()
       self._cpu.altera_estado()
-
-      
+ 
   def _salva_cpu(self):
     self.escalonador.get_lista_jobs()[self.escalonador.get_job_atual()].setPc(self._cpu.getPc())  
     self.escalonador.get_lista_jobs()[self.escalonador.get_job_atual()].setAcumulador(self._cpu.getAcumulador()) 
     self.escalonador.get_lista_jobs()[self.escalonador.get_job_atual()].setMem_dados(self._cpu.getMem_dados())
 
-
   def carregar_programa(self):
 
     if self.escalonador.checka_pendencia() != -1:
-      self.escalonador.set_job_atual(self.escalonador.checka_pendencia())
+      self.escalonador.set_job_atual(self.escalonador.checka_pendencia(), self._timer.tempo_atual())
       self._cpu.altera_estado()
       self._cpu.altera_programa(self.escalonador.get_lista_jobs()[self.escalonador.get_job_atual()].getMem_prog())
       self._cpu.setMem_dados(self.escalonador.get_lista_jobs()[self.escalonador.get_job_atual()].getMem_dados())
