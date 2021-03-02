@@ -5,6 +5,9 @@ class Job:
     self._mem_prog = [line.replace('\n','').upper() for line in programa]
     self._mem_dados = [0 for _ in range(20)]
     self._status = 'pendente'
+    self._timer = timer
+    self._prioridade = 0.5
+    
 
   def getPrograma(self):
     return self._programa
@@ -47,3 +50,15 @@ class Job:
 
   def incrementa_pc(self):
     self.__pc += 1
+
+  def getTimer(self):
+    return self._timer
+
+  def setTimer(self, timer):
+    self._timer = timer
+
+  def getPrioridade(self):
+    return self._prioridade
+
+  def setPrioridade(self, prio):
+    self._prioridade = prio
