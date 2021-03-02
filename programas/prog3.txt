@@ -1,5 +1,0 @@
-SOMA  0
-le 1
-neg
-grava 1
-para

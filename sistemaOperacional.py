@@ -33,8 +33,8 @@ class SistemaOperacional:
   def carregaJobs(self):
     self._lista_jobs = []
     self._job1 = Job(open('./programas/prog1.txt', 'r'), self._timer.tempo_atual())
-    self._job2 = Job(open('./programas/prog2.txt', 'r'), self._timer.tempo_atual())
-    self._job3 = Job(open('./programas/prog3.txt', 'r'), self._timer.tempo_atual())
+    self._job2 = Job(open('./programas/prog1.txt', 'r'), self._timer.tempo_atual())
+    self._job3 = Job(open('./programas/prog2.txt', 'r'), self._timer.tempo_atual())
     self._job4 = Job(open('./programas/prog2.txt', 'r'), self._timer.tempo_atual())
 
     self._lista_jobs.extend([self._job1, self._job2, self._job3, self._job4])
@@ -46,13 +46,13 @@ class SistemaOperacional:
     print("Exit - Programa Finalizado\n")
     return False
   
-  def __le(self, codigo):
+  def __le(self, codigo, valor):
     job = self.escalonador.get_lista_jobs()[codigo]
     mem_prog = job.getMem_prog()
     pc = job.getPc()
     instr = mem_prog[pc]
     acc = job.getAcumulador()
-    with open('0.txt', 'r') as conteudo:
+    with open(f'./entradas-saidas/0_{codigo}x{valor}.txt', 'r') as conteudo:
       job.setAcumulador(int(conteudo.readline()))
     self.escalonador.get_lista_jobs()[codigo].incrementa_pc()
     print("RESOLVEU!!!! LE", codigo)
@@ -60,14 +60,14 @@ class SistemaOperacional:
       self._cpu.set_ax(job.getAcumulador())
       self._cpu.set_pc(job.getPc())
     return True
-
-  def __grava(self, codigo):
+################################# LER LINHAS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
+  def __grava(self, codigo, valor):
     job = self.escalonador.get_lista_jobs()[codigo]
     mem_prog = job.getMem_prog()
     pc = job.getPc()
     instr = mem_prog[pc]
     acc = job.getAcumulador()
-    with open('1.txt', 'w') as conteudo:
+    with open(f'./entradas-saidas/1_{codigo}x{valor}.txt', 'w') as conteudo:
       conteudo.write(str(acc))
     
     self.escalonador.get_lista_jobs()[codigo].incrementa_pc()
@@ -98,7 +98,6 @@ class SistemaOperacional:
   def resolve_interrupcao(self, codigo):
     if codigo == 1000:
       print("inicializou o programa!!!!!!!!!!!")
-      #implementar leitura/gravacao de arquivo nos arquivos designados pelo parametro  
       self.escalonador.change_status()
       self.carregar_programa()
     else:
@@ -106,8 +105,7 @@ class SistemaOperacional:
       mem_prog = job.getMem_prog()
       instrucao = mem_prog[job.getPc()]
       comando, valor = instrucao.split()
-      
-      self._instrucoes_dic[comando](codigo)
+      self._instrucoes_dic[comando](codigo, valor)
       
       if job.getStatus() != 'finalizado':
         job.setPendente()
@@ -126,6 +124,7 @@ class SistemaOperacional:
       self._cpu.altera_programa(self.escalonador.get_lista_jobs()[self.escalonador.get_job_atual()].getMem_prog())
       self._cpu.setMem_dados(self.escalonador.get_lista_jobs()[self.escalonador.get_job_atual()].getMem_dados())
       self._cpu.set_pc(self.escalonador.get_lista_jobs()[self.escalonador.get_job_atual()].getPc())
+      self._cpu.set_ax(self.escalonador.get_lista_jobs()[self.escalonador.get_job_atual()].getAcumulador())
 
 if __name__ == '__main__':
   SistemaOperacional()
