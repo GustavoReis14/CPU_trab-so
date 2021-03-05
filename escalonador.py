@@ -1,38 +1,41 @@
 class Escalonador:
   def __init__(self, lista_jobs):
-    self.lista_jobs = lista_jobs
-    self.job_atual = self.checka_pendencia()
-    self.status = False
+    self.__lista_jobs = lista_jobs
+    self.__job_atual = self.checkaJobPendente()
+    self.__status = False
 
-  def checka_pendencia(self):
-    for i, job in enumerate(self.lista_jobs, start=0):
+  def checkaJobPendente(self):
+    for i, job in enumerate(self.__lista_jobs, start=0):
       if job.getStatus() == 'pendente': 
         return i
     return -1
     
-  def checka_dormindo(self):
-    for i, job in enumerate(self.lista_jobs, start=0):
+  def checkaJobDormindo(self):
+    for i, job in enumerate(self.__lista_jobs, start=0):
       if job.getStatus() == 'dormindo': 
         return i
     return -1
 
-  def set_job_atual(self, job, timer):
-    self.job_atual = job
+  def getJobAtual(self):
+    return self.__job_atual
+     
+  def setJobAtual(self, job, timer):
+    self.__job_atual = job
     #Só altera o timer na primeira chamada do JOB
-    if self.lista_jobs[self.job_atual].getTimer() == 0:
-      self.lista_jobs[self.job_atual].setTimer(timer)
-      print("TEMPO ATUAL",self.lista_jobs[self.job_atual].getTimer())
+    if self.__lista_jobs[self.__job_atual].getTimer() == 0:
+      self.__lista_jobs[self.__job_atual].setTimer(timer)
+      print("TEMPO ATUAL",self.__lista_jobs[self.__job_atual].getTimer())
     else:
-      print("JA INICIOU NO TEMPO", self.lista_jobs[self.job_atual].getTimer())
+      print("JA INICIOU NO TEMPO", self.__lista_jobs[self.__job_atual].getTimer())
 
-  def get_job_atual(self):
-    return self.job_atual
+  def getListaJobs(self):
+    return self.__lista_jobs
 
-  def get_lista_jobs(self):
-    return self.lista_jobs
+  def alteraStatus(self):
+    self.__status = not self.__status
 
-  def change_status(self):
-    self.status = not self.status
+  def getStatus(self):
 
-  def get_status(self):
-    return self.status
+    return self.__status
+
+  def 
