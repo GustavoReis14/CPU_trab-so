@@ -5,30 +5,30 @@ class ControladorInterrupcoes:
 
   def execucao_cpu(self, cpu, so, timer, escalonador):
     comando = ''
-    while cpu.interrupcao() == 'normal' or cpu.interrupcao() == 'dormindo' :
+    while cpu.getEstado() == 'normal' or cpu.getEstado() == 'dormindo' :
 
 
       timer.incrementa()
 
-      print(f'TIMER : {timer.tempo_atual()}')
+      print(f'TIMER : {timer.getTempoAtual()}')
       
       
       while True:
-        cod_interrupcao = timer.pendencia()
+        cod_interrupcao = timer.cheackInterrupcaoPendente()
         if cod_interrupcao == -1: break
-        so.resolve_interrupcao(cod_interrupcao)
+        so.resolveInterrupcao(cod_interrupcao)
       
 
-      print(f'JOB ATUAL : {escalonador.job_atual}')
-      if cpu.interrupcao() == 'normal' and escalonador.get_status() == True:
+      print(f'JOB ATUAL : {escalonador.get_job_atual() if escalonador.get_status() else "None"}')
+      if cpu.getEstado() == 'normal' and escalonador.get_status() == True:
       
         #executa programa
         cpu.executa()
-        if cpu.interrupcao() != 'normal':
-          resolvido = so.resolve_instrucao(cpu.instrucao())
+        if cpu.getEstado() != 'normal':
+          resolvido = so.resolveInstrucaoIlegal(cpu.getComandoIlegal())
 
           if escalonador.get_lista_jobs()[escalonador.get_job_atual()].getStatus() == 'finalizado' or escalonador.get_lista_jobs()[escalonador.get_job_atual()].getStatus() == 'dormindo':
-            so.carregar_programa()
+            so.carregaPrograma()
           if escalonador.checka_pendencia() == -1 and escalonador.checka_dormindo() == -1:
             break
 

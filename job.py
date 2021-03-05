@@ -2,8 +2,8 @@ class Job:
   def __init__(self, programa, timer):
     self.__pc = 0
     self.__ax = 0
-    self._mem_prog = [line.replace('\n','').upper() for line in programa]
-    self._mem_dados = [0 for _ in range(20)]
+    self.__mem_prog = [line.replace('\n','').upper() for line in programa]
+    self.__mem_dados = [0 for _ in range(20)]
     self._status = 'pendente'
     self._timer = timer
     self._prioridade = 0.5
@@ -13,10 +13,10 @@ class Job:
     return self._programa
 
   def getMem_prog(self):
-    return self._mem_prog
+    return self.__mem_prog
 
   def getMem_dados(self):
-    return self._mem_dados
+    return self.__mem_dados
   
   def getStatus(self):
     return self._status
@@ -40,7 +40,7 @@ class Job:
     self._status = 'dormindo'
   
   def setMem_dados(self, mem):
-    self._mem_dados = mem
+    self.__mem_dados = mem
     
   def status(self):
     print(f'PC = {self.__pc}\nAX = {self.__ax}\nMEM = {self._mem_dados}')
