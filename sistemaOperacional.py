@@ -55,7 +55,7 @@ class SistemaOperacional:
       job.setAcumulador(int(conteudo.readline()))
     self.__escalonador.getListaJobs()[codigo].incremantePc()
     print("RESOLVEU!!!! LE", codigo)
-    if codigo == self.__escalonador.getJobAtual():
+    if codigo == self.__escalonador.getJobAtualIndex():
       self.__cpu.setAcumulador(job.getAcumulador())
       self.__cpu.setPc(job.getPc())
     return True
@@ -70,7 +70,7 @@ class SistemaOperacional:
       conteudo.write(str(acc))
     
     self.__escalonador.getListaJobs()[codigo].incremantePc()
-    if codigo == self.__escalonador.getJobAtual():
+    if codigo == self.__escalonador.getJobAtualIndex():
       self.__cpu.setAcumulador(job.getAcumulador())
       self.__cpu.setPc(job.getPc())
 
@@ -84,14 +84,14 @@ class SistemaOperacional:
       if instrucao != 'PARA':  
         self.__salvaCpu()    
         self.__cpu.setEstadoDormindo()
-        self.__escalonador.getListaJobs()[self.__escalonador.getJobAtual()].setStatusDormir()
-        self.__timer.criaInterrupcao('aperiodica', 0, 2, self.__escalonador.getJobAtual())
+        self.__escalonador.getJobAtual().setStatusDormir()
+        self.__timer.criaInterrupcao('aperiodica', 0, 2, self.__escalonador.getJobAtualIndex())
         return self.__instrucoes_dic[instrucao]
       else:
         self.__cpu.setEstadoDormindo()
-        return self.__instrucoes_dic["PARA"](self.__escalonador.getJobAtual())
+        return self.__instrucoes_dic["PARA"](self.__escalonador.getJobAtualIndex())
     else:
-      self.__escalonador.lista_jobs[self.__escalonador.getJobAtual()].setStatusFinalizado()
+      self.__escalonador.lista_jobs[self.__escalonador.getJobAtualIndex()].setStatusFinalizado()
       print("Instrução Ilegal\nExit - Programa Finalizado\n")
 
   def resolveInterrupcao(self, codigo):
@@ -111,19 +111,19 @@ class SistemaOperacional:
       self.__cpu.setEstadoNormal()
  
   def __salvaCpu(self):
-    self.__escalonador.getListaJobs()[self.__escalonador.getJobAtual()].setPc(self.__cpu.getPc())  
-    self.__escalonador.getListaJobs()[self.__escalonador.getJobAtual()].setAcumulador(self.__cpu.getAcumulador()) 
-    self.__escalonador.getListaJobs()[self.__escalonador.getJobAtual()].setMemDados(self.__cpu.getMemDados())
+    self.__escalonador.getJobAtual().setPc(self.__cpu.getPc())  
+    self.__escalonador.getJobAtual().setAcumulador(self.__cpu.getAcumulador()) 
+    self.__escalonador.getJobAtual().setMemDados(self.__cpu.getMemDados())
 
   def carregaPrograma(self):
 
     if self.__escalonador.checkaJobPendente() != -1:
       self.__escalonador.setJobAtual(self.__escalonador.checkaJobPendente(), self.__timer.getTempoAtual())
       self.__cpu.setEstadoNormal()
-      self.__cpu.setMemPrograma(self.__escalonador.getListaJobs()[self.__escalonador.getJobAtual()].getMemProg())
-      self.__cpu.setMemDados(self.__escalonador.getListaJobs()[self.__escalonador.getJobAtual()].getMemDados())
-      self.__cpu.setPc(self.__escalonador.getListaJobs()[self.__escalonador.getJobAtual()].getPc())
-      self.__cpu.setAcumulador(self.__escalonador.getListaJobs()[self.__escalonador.getJobAtual()].getAcumulador())
+      self.__cpu.setMemPrograma(self.__escalonador.getJobAtual().getMemProg())
+      self.__cpu.setMemDados(self.__escalonador.getJobAtual().getMemDados())
+      self.__cpu.setPc(self.__escalonador.getJobAtual().getPc())
+      self.__cpu.setAcumulador(self.__escalonador.getJobAtual().getAcumulador())
 
 if __name__ == '__main__':
   SistemaOperacional()

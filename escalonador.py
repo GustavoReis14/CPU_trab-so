@@ -16,7 +16,7 @@ class Escalonador:
         return i
     return -1
 
-  def getJobAtual(self):
+  def getJobAtualIndex(self):
     return self.__job_atual
      
   def setJobAtual(self, job, timer):
@@ -38,4 +38,5 @@ class Escalonador:
 
     return self.__status
 
-  def 
+  def getJobAtual(self):
+    return self.getListaJobs()[self.getJobAtualIndex()]

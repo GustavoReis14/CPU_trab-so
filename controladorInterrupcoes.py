@@ -19,7 +19,7 @@ class ControladorInterrupcoes:
         so.resolveInterrupcao(cod_interrupcao)
       
 
-      print(f'JOB ATUAL : {escalonador.getJobAtual() if escalonador.getStatus() else "None"}')
+      print(f'JOB ATUAL : {escalonador.getJobAtualIndex() if escalonador.getStatus() else "None"}')
       if cpu.getEstado() == 'normal' and escalonador.getStatus() == True:
       
         #executa programa
@@ -27,7 +27,7 @@ class ControladorInterrupcoes:
         if cpu.getEstado() != 'normal':
           resolvido = so.resolveInstrucaoIlegal(cpu.getComandoIlegal())
 
-          if escalonador.getListaJobs()[escalonador.getJobAtual()].getStatus() == 'finalizado' or escalonador.getListaJobs()[escalonador.getJobAtual()].getStatus() == 'dormindo':
+          if escalonador.getJobAtual().getStatus() == 'finalizado' or escalonador.getJobAtual().getStatus() == 'dormindo':
             so.carregaPrograma()
           if escalonador.checkaJobPendente() == -1 and escalonador.checkaJobDormindo() == -1:
             break
