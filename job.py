@@ -4,61 +4,55 @@ class Job:
     self.__ax = 0
     self.__mem_prog = [line.replace('\n','').upper() for line in programa]
     self.__mem_dados = [0 for _ in range(20)]
-    self._status = 'pendente'
-    self._timer = timer
-    self._prioridade = 0.5
+    self.__status = 'pendente'
+    self.__timer = timer
+    self.__prioridade = 0.5
     
 
-  def getPrograma(self):
-    return self._programa
-
-  def getMem_prog(self):
+  def getMemProg(self):
     return self.__mem_prog
 
-  def getMem_dados(self):
+  def getMemDados(self):
     return self.__mem_dados
   
-  def getStatus(self):
-    return self._status
-
-  def getAcumulador(self):
-    return self.__ax
-
   def getPc(self):
     return self.__pc
     
   def setPc(self, pc):
     self.__pc = pc
 
-  def setPendente(self):
-    self._status = 'pendente'
-
-  def setAcumulador(self, ax):
-    self.__ax = ax
-
-  def setDomir(self):
-    self._status = 'dormindo'
-  
-  def setMem_dados(self, mem):
-    self.__mem_dados = mem
-    
-  def status(self):
-    print(f'PC = {self.__pc}\nAX = {self.__ax}\nMEM = {self._mem_dados}')
-
-  def setFinalizado(self):
-    self._status = 'finalizado'
-
-  def incrementa_pc(self):
+  def incremantePc(self):
     self.__pc += 1
 
+  def getStatus(self):
+    return self.__status
+  
+  def setStatusPendente(self):
+    self.__status = 'pendente'
+
+  def setStatusFinalizado(self):
+    self.__status = 'finalizado'
+
+  def setStatusDormir(self):
+    self.__status = 'dormindo'
+
+  def getAcumulador(self):
+    return self.__ax
+
+  def setAcumulador(self, v):
+    self.__ax = v
+  
+  def setMemDados(self, mem):
+    self.__mem_dados = mem
+
   def getTimer(self):
-    return self._timer
+    return self.__timer
 
   def setTimer(self, timer):
-    self._timer = timer
+    self.__timer = timer
 
   def getPrioridade(self):
-    return self._prioridade
+    return self.__prioridade
 
   def setPrioridade(self, prio):
-    self._prioridade = prio
+    self.__prioridade = prio

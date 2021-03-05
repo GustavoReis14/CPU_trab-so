@@ -41,19 +41,19 @@ class SistemaOperacional:
     self.__escalonador = Escalonador(self.__lista_jobs)
 
   def __para(self, codigo):
-    self.__escalonador.get_lista_jobs()[codigo].setFinalizado()
+    self.__escalonador.get_lista_jobs()[codigo].setStatusFinalizado()
     print("Exit - Programa Finalizado\n")
     return False
   
   def __le(self, codigo, valor):
     job = self.__escalonador.get_lista_jobs()[codigo]
-    mem_prog = job.getMem_prog()
+    mem_prog = job.getMemProg()
     pc = job.getPc()
     instr = mem_prog[pc]
     acc = job.getAcumulador()
     with open(f'./entradas-saidas/0_{codigo}x{valor}.txt', 'r') as conteudo:
       job.setAcumulador(int(conteudo.readline()))
-    self.__escalonador.get_lista_jobs()[codigo].incrementa_pc()
+    self.__escalonador.get_lista_jobs()[codigo].incremantePc()
     print("RESOLVEU!!!! LE", codigo)
     if codigo == self.__escalonador.get_job_atual():
       self.__cpu.setAcumulador(job.getAcumulador())
@@ -62,14 +62,14 @@ class SistemaOperacional:
 ################################# LER LINHAS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
   def __grava(self, codigo, valor):
     job = self.__escalonador.get_lista_jobs()[codigo]
-    mem_prog = job.getMem_prog()
+    mem_prog = job.getMemProg()
     pc = job.getPc()
     instr = mem_prog[pc]
     acc = job.getAcumulador()
     with open(f'./entradas-saidas/1_{codigo}x{valor}.txt', 'w') as conteudo:
       conteudo.write(str(acc))
     
-    self.__escalonador.get_lista_jobs()[codigo].incrementa_pc()
+    self.__escalonador.get_lista_jobs()[codigo].incremantePc()
     if codigo == self.__escalonador.get_job_atual():
       self.__cpu.setAcumulador(job.getAcumulador())
       self.__cpu.setPc(job.getPc())
@@ -84,14 +84,14 @@ class SistemaOperacional:
       if instrucao != 'PARA':  
         self.__salvaCpu()    
         self.__cpu.setEstadoDormindo()
-        self.__escalonador.get_lista_jobs()[self.__escalonador.get_job_atual()].setDomir()
+        self.__escalonador.get_lista_jobs()[self.__escalonador.get_job_atual()].setStatusDormir()
         self.__timer.criaInterrupcao('aperiodica', 0, 2, self.__escalonador.get_job_atual())
         return self.__instrucoes_dic[instrucao]
       else:
         self.__cpu.setEstadoDormindo()
         return self.__instrucoes_dic["PARA"](self.__escalonador.get_job_atual())
     else:
-      self.__escalonador.lista_jobs[self.__escalonador.job_atual].setFinalizado()
+      self.__escalonador.lista_jobs[self.__escalonador.job_atual].setStatusFinalizado()
       print("Instrução Ilegal\nExit - Programa Finalizado\n")
 
   def resolveInterrupcao(self, codigo):
@@ -101,27 +101,27 @@ class SistemaOperacional:
       self.carregaPrograma()
     else:
       job = self.__escalonador.get_lista_jobs()[codigo]
-      mem_prog = job.getMem_prog()
+      mem_prog = job.getMemProg()
       instrucao = mem_prog[job.getPc()]
       comando, valor = instrucao.split()
       self.__instrucoes_dic[comando](codigo, valor)
       
       if job.getStatus() != 'finalizado':
-        job.setPendente()
+        job.setStatusPendente()
       self.__cpu.setEstadoNormal()
  
   def __salvaCpu(self):
     self.__escalonador.get_lista_jobs()[self.__escalonador.get_job_atual()].setPc(self.__cpu.getPc())  
     self.__escalonador.get_lista_jobs()[self.__escalonador.get_job_atual()].setAcumulador(self.__cpu.getAcumulador()) 
-    self.__escalonador.get_lista_jobs()[self.__escalonador.get_job_atual()].setMem_dados(self.__cpu.getMemDados())
+    self.__escalonador.get_lista_jobs()[self.__escalonador.get_job_atual()].setMemDados(self.__cpu.getMemDados())
 
   def carregaPrograma(self):
 
     if self.__escalonador.checka_pendencia() != -1:
       self.__escalonador.set_job_atual(self.__escalonador.checka_pendencia(), self.__timer.getTempoAtual())
       self.__cpu.setEstadoNormal()
-      self.__cpu.setMemPrograma(self.__escalonador.get_lista_jobs()[self.__escalonador.get_job_atual()].getMem_prog())
-      self.__cpu.setMemDados(self.__escalonador.get_lista_jobs()[self.__escalonador.get_job_atual()].getMem_dados())
+      self.__cpu.setMemPrograma(self.__escalonador.get_lista_jobs()[self.__escalonador.get_job_atual()].getMemProg())
+      self.__cpu.setMemDados(self.__escalonador.get_lista_jobs()[self.__escalonador.get_job_atual()].getMemDados())
       self.__cpu.setPc(self.__escalonador.get_lista_jobs()[self.__escalonador.get_job_atual()].getPc())
       self.__cpu.setAcumulador(self.__escalonador.get_lista_jobs()[self.__escalonador.get_job_atual()].getAcumulador())
 
